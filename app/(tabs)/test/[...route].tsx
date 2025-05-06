@@ -19,9 +19,9 @@ const navigate = (name: keyof RootStackParamList, params?: object) => {
 
 export default function TestRoute() {
   const router = useRouter();
-  // const navigation = useNavigation();
   const pathname = usePathname();
 
+  // If the Expo Router path starts with test, we need to navigate to the new path on the old stack navigator
   useEffect(() => {
     if (!pathname.startsWith('/test')) {
       return;
@@ -36,6 +36,7 @@ export default function TestRoute() {
     }
   }, [pathname]);
 
+  // If the old stack navigator path changes, we need to maintain the path history on Expo Router
   useEffect(() => {
     navigationRef.addListener('state', (data) => {
       const path = getPathFromState(navigationRef.getRootState());
